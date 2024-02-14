@@ -1,0 +1,22 @@
+@import '../../styles.scss';
+
+section {
+    height: 100vh;
+    width: 100%;
+    background-image: url('../../assets/img/board.jpg');
+    @include flex-center();
+}
+
+.card-stack {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -64px;
+    margin-left: -44px;
+    transform: translate(-50%, -50%);
+
+    >img {
+        height: 128px;
+        position: absolute;
+    }
+}

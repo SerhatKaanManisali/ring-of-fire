@@ -1,6 +1,5 @@
-@mixin headline($fs: 64px, $tf: 1.1, $fb: 1.5) {
+@mixin headline($fs: 56px, $tf: 1.1, $fb: 1.5) {
     font-size: $fs;
-    padding-left: 2%;
     max-width: fit-content;
     color: #e3b212;
     background-image: -webkit-linear-gradient(270deg, #e3b212 0%, #FF8C00 35%, #FF0000 70%);
@@ -24,7 +23,8 @@ section {
     background-position: (25%, 50%);
     display: flex;
     flex-direction: column;
-    gap: 5%;
+    gap: 8%;
+    padding-left: 2%;
 
     >header {
         padding-top: 10%;
@@ -36,11 +36,15 @@ section {
     }
 
     >nav {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: fit-content;
 
         >a {
             display: flex;
             text-decoration: none;
-            max-width: fit-content;
+            width: fit-content;
             text-wrap: nowrap;
 
             >h2 {
@@ -48,7 +52,7 @@ section {
             }
     
             >h3 {
-                @include headline($fs: 48px)
+                @include headline()
             }
         }
     }
