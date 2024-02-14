@@ -1,7 +1,9 @@
 <section>
     <div class="card-stack">
-        @for (count of [0, 1, 2, 3, 4]; track count;) {
-            <img [ngStyle]="{'left.px': count * 2}" src="../../assets/img/cards/card_cover_default.png">
+        @for (count of [0, 1, 2, 3]; track count;) {
+            <img [ngStyle]="{'left.px': count * 3}" src="../../assets/img/cards/card_cover.png">
         }
-    </div>
+        <img (click)="takeCard()" [class.take-card]="cardTaken" style="left: 12px;" src="../../assets/img/cards/card_cover.png">
+        <img *ngIf="cardTaken" class="take-card" style="left: 14px;" src="../../assets/img/cards/ace_1.png">
+    </div>card
 </section>
