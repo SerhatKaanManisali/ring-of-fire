@@ -22,7 +22,6 @@ export class GameComponent implements OnInit {
   }
 
   newGame() {
-    this.gameService.players = [];
     this.fillStack();
     shuffle(this.gameService.stack);
     this.gameService.playedCards = [];
@@ -47,7 +46,7 @@ export class GameComponent implements OnInit {
         setTimeout(() => {
           this.gameService.playedCards.push(this.currentCard);
           this.cardTaken = false;
-        }, 1000);
+        }, 1500);
       }
     }
   }
