@@ -1,9 +1,14 @@
+<app-player style="top: 5%;"></app-player>
+
 <section>
     <div class="card-stack">
-        @for (count of [0, 1, 2, 3]; track count;) {
+        @for (count of [0, 1, 2, 3]; track $index;) {
             <img [ngStyle]="{'left.px': count * 3}" src="../../assets/img/cards/card_cover.png">
         }
-        <img (click)="takeCard()" [class.take-card]="cardTaken" style="left: 12px;" src="../../assets/img/cards/card_cover.png">
-        <img *ngIf="cardTaken" class="take-card" style="left: 14px;" src="../../assets/img/cards/ace_1.png">
-    </div>card
+        <img (click)="takeCard()" [class.take-card]="cardTaken" class="top-card" style="left: 12px;" src="../../assets/img/cards/card_cover.png">
+        @for (card of gameService.playedCards; track $index) {
+            <img class="played-card" src="../../assets/img/cards/{{card}}.png">
+        }
+        <img *ngIf="cardTaken" class="take-card" style="left: 14px;" src="../../assets/img/cards/{{currentCard}}.png">
+    </div>
 </section>

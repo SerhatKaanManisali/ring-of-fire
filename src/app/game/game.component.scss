@@ -18,20 +18,26 @@ section {
     >img {
         height: 128px;
         position: absolute;
+    }
+}
 
-        &:last-of-type {
-            cursor: pointer;
-            transition: all 100ms ease-in-out;
-            &:hover {
-                transform: translate(6px, -4px) scale(1.05);
-            }
-        }
+.top-card {
+    cursor: pointer;
+    transition: all 100ms ease-in-out;
+
+    &:hover {
+        transform: translate(6px, -4px) scale(1.05);
     }
 }
 
 .take-card {
     transition: all 100ms ease-in-out;
     animation: forwards take-card-animation 1s ease-in-out;
+}
+
+.played-card {
+    left: 12px;
+    transform: translate(-150px, -150px) rotate(-10deg);
 }
 
 @keyframes take-card-animation {
@@ -50,4 +56,9 @@ section {
     100% {
         transform: scale(1) translate(-150px, -150px) rotate(-10deg);
     }
+}
+
+app-player {
+    position: absolute;
+    right: 5%;
 }
