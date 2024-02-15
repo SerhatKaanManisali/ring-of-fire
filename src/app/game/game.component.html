@@ -20,6 +20,8 @@
         <img *ngIf="cardTaken" class="take-card" style="left: 12px;" src="../../assets/img/cards/{{currentCard}}.png">
     </div>
 
+    <app-card-info [card]="currentCard"></app-card-info>
+
     <button mat-fab color="primary" (click)="openDialog()">
         <mat-icon>
             <img src="../../assets/img/add.png">
