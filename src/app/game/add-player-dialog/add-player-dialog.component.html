@@ -2,10 +2,10 @@
     <h1 mat-dialog-title>Add new player</h1>
     <mat-form-field>
         <mat-label>What's your name?</mat-label>
-        <input matInput [(ngModel)]="name" required>
+        <input matInput [(ngModel)]="name">
       </mat-form-field>
     <mat-dialog-actions>
-        <button mat-raised-button>cancel</button>
-        <button mat-raised-button color="primary" [mat-dialog-close]="name">Add</button>
+        <button mat-raised-button (click)="closeDialog()">cancel</button>
+        <button mat-raised-button color="primary" [disabled]="name.length === 0" [mat-dialog-close]="name">Add</button>
     </mat-dialog-actions>
 </section>

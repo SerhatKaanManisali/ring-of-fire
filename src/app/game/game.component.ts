@@ -23,7 +23,7 @@ export class GameComponent implements OnInit {
   cardTaken: boolean = false;
 
 
-  constructor(public dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
 
   ngOnInit(): void {
@@ -55,18 +55,33 @@ export class GameComponent implements OnInit {
       if (poppedCard !== undefined) {
         this.currentCard = poppedCard;
         this.cardTaken = true;
-        setTimeout(() => {
-          this.gameService.playedCards.push(this.currentCard);
-          this.cardTaken = false;
-        }, 1500);
+        this.pickNextPlayer();
+        this.addToPlayedStack();
       }
     }
   }
 
 
+  pickNextPlayer() {
+    this.gameService.currentPlayer++;
+    this.gameService.currentPlayer = this.gameService.currentPlayer % this.gameService.players.length;
+  }
+
+
+  addToPlayedStack() {
+    setTimeout(() => {
+      this.gameService.playedCards.push(this.currentCard);
+      this.cardTaken = false;
+    }, 1500);
+  }
+
+
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddPlayerDialogComponent)
-    dialogRef.afterClosed().subscribe(name => this.gameService.players.push(name));
+    const dialogRef = this.dialog.open(AddPlayerDialogComponent);
+    dialogRef.afterClosed().subscribe(name => {
+      if (name && name.length > 0)
+        this.gameService.players.push(name);
+    });
   }
 }
 

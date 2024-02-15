@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogActions, MatDialogClose, MatDialogTitle } from '@angular/material/dialog';
+import { MatDialogActions, MatDialogClose, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -15,5 +15,12 @@ import {MatInputModule} from '@angular/material/input';
   styleUrl: './add-player-dialog.component.scss'
 })
 export class AddPlayerDialogComponent {
+
   name: string = '';
+
+  constructor (public dialogRef: MatDialogRef<AddPlayerDialogComponent>) {}
+
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
 }
