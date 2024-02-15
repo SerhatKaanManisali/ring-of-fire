@@ -1,12 +1,9 @@
 @mixin headline($fs: 56px, $tf: 1.1, $fb: 1.5) {
     font-size: $fs;
     max-width: fit-content;
-    color: #e3b212;
-    background-image: -webkit-linear-gradient(270deg, #e3b212 0%, #FF8C00 35%, #FF0000 70%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     transition: all 100ms ease-in-out;
+    font-family: 'Comfortaa', 'Josefin Sans';
+    color: white;
 
     &:hover {
         transform: scale($tf);
