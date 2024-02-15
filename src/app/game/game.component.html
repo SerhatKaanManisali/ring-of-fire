@@ -10,21 +10,21 @@
 
     <div class="card-stack">
         @for (count of [0, 1, 2, 3]; track $index;) {
-        <img [ngStyle]="{'left.px': count * 3}" src="../../assets/img/cards/card_cover.png">
+        <img [ngStyle]="{'left.px': count * 3}" src="assets/img/cards/card_cover.png">
         }
         <img (click)="takeCard()" [class.take-card]="cardTaken" class="top-card" style="left: 12px;"
-            src="../../assets/img/cards/card_cover.png">
+            src="assets/img/cards/card_cover.png">
         @for (card of gameService.playedCards; track $index) {
-        <img class="played-card" src="../../assets/img/cards/{{card}}.png">
+        <img class="played-card" src="assets/img/cards/{{card}}.png">
         }
-        <img *ngIf="cardTaken" class="take-card" style="left: 12px;" src="../../assets/img/cards/{{currentCard}}.png">
+        <img *ngIf="cardTaken" class="take-card" style="left: 12px;" src="assets/img/cards/{{currentCard}}.png">
     </div>
 
     <app-card-info [card]="currentCard"></app-card-info>
 
     <button mat-fab color="primary" (click)="openDialog()">
         <mat-icon>
-            <img src="../../assets/img/add.png">
+            <img src="assets/img/add.png">
         </mat-icon>
     </button>
 

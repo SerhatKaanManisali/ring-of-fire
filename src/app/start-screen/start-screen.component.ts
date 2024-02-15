@@ -9,7 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './start-screen.component.scss'
 })
 export class StartScreenComponent {
-  newGame() {
-    
-  }
+  
 }
