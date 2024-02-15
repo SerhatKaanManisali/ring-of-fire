@@ -2,12 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { GameService } from '../services/game.service';
 import { PlayerComponent } from '../player/player.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { AddPlayerDialogComponent } from './add-player-dialog/add-player-dialog.component';
 
 
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [CommonModule, PlayerComponent],
+  imports: [CommonModule, PlayerComponent, MatButtonModule, MatIconModule, MatDialogModule],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
 })
@@ -17,9 +21,14 @@ export class GameComponent implements OnInit {
   currentCard: string = '';
   cardTaken: boolean = false;
 
+
+  constructor(public dialog: MatDialog) {}
+
+
   ngOnInit(): void {
     this.newGame();
   }
+
 
   newGame() {
     this.fillStack();
@@ -27,6 +36,7 @@ export class GameComponent implements OnInit {
     this.gameService.playedCards = [];
     this.gameService.currentPlayer = 0;
   }
+
 
   fillStack() {
     for (let i = 1; i < 14; i++) {
@@ -36,6 +46,7 @@ export class GameComponent implements OnInit {
       this.gameService.stack.push(`hearts_${i}`);
     }
   }
+
 
   takeCard() {
     if (!this.cardTaken) {
@@ -49,6 +60,12 @@ export class GameComponent implements OnInit {
         }, 1500);
       }
     }
+  }
+
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddPlayerDialogComponent)
+    dialogRef.afterClosed().subscribe(name => this.gameService.players.push(name));
   }
 }
 

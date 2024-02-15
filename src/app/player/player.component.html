@@ -1,4 +1,4 @@
 <div>
-    <img src="../../assets/img/profile.png">
-    <span>Name</span>
+    <img [ngStyle]="playerActive?{'border-color': borderColorActive} : {'border-color': borderColorInactive}" src="../../assets/img/profile.png">
+    <span>{{playerName}}</span>
 </div>

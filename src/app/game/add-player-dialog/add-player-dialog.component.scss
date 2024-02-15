@@ -1,0 +1,35 @@
+@import '../../../styles.scss';
+
+section {
+    @include flex-center();
+    flex-direction: column;
+    padding: 25px;
+    gap: 25px;
+
+    >h1 {
+        font-family: 'Comfortaa', 'Josefin Sans' !important;
+        font-size: 36px;
+        margin: 0;
+    }
+
+    >input {
+        font-size: 24px;
+        border: 1px solid gray;
+        border-radius: 5px;
+        padding: 7px;
+
+        &:focus {
+            outline: unset;
+        }
+    }
+
+    >div {
+        display: flex;
+        gap: 25px;
+
+        >button {
+            font-size: 20px;
+            padding: 15px;
+        }
+    }
+}

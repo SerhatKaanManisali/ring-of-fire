@@ -1,10 +1,23 @@
 @import '../../styles.scss';
 
 section {
+    @include flex-center();
     height: 100vh;
     width: 100%;
     background-image: url('../../assets/img/board.jpg');
+
+    button {
+        position: absolute;
+        bottom: 25px;
+        right: 25px;
+    }
+}
+
+.player-container {
     @include flex-center();
+    position: absolute;
+    top: 25px;
+    gap: 25px;
 }
 
 .card-stack {
@@ -56,9 +69,4 @@ section {
     100% {
         transform: scale(1) translate(-150px, -150px) rotate(-10deg);
     }
-}
-
-app-player {
-    position: absolute;
-    right: 5%;
 }
