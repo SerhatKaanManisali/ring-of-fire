@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Firestore, collection, doc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +10,18 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'ring-of-fire';
+
+  firestore: Firestore = inject(Firestore);
+
+  constructor() {
+    
+  }
+
+  getGamesRef() {
+    return collection(this.firestore, 'game-instances')
+  }
+
+  getDocRef(docId: string) {
+    return doc(this.getGamesRef(), docId);
+  }
 }
