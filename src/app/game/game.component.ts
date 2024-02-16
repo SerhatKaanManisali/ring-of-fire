@@ -50,7 +50,7 @@ export class GameComponent implements OnInit {
 
 
   takeCard() {
-    if (!this.cardTaken) {
+    if (!this.cardTaken && this.gameService.players.length !== 0) {
       let poppedCard = this.gameService.stack.pop();
       if (poppedCard !== undefined) {
         this.currentCard = poppedCard;

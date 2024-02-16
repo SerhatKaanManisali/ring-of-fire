@@ -1,6 +1,28 @@
 <mat-card>
     <mat-card-header>
-        <mat-card-title>{{card ? title : 'Pick a card'}}</mat-card-title>
+        @if (card) {
+            <mat-card-title>{{title}}</mat-card-title>
+        }
+        @else if (gameService.players.length === 0) {
+            <mat-card-title>Add a player</mat-card-title>
+        }
+        @else if (gameService.stack.length > 0) {
+            <mat-card-title>Pick a card</mat-card-title>
+        }
+        @else {
+            <mat-card-title>Play again</mat-card-title>
+        }
     </mat-card-header>
-    <mat-card-content>{{card ? description : 'Click on the card stack to pick a card.'}}</mat-card-content>
+    @if (card) {
+        <mat-card-content>{{description }}</mat-card-content>
+    }
+    @else if (gameService.players.length === 0) {
+        <mat-card-content>Add at least one new player to start play the game.</mat-card-content>
+    }
+    @else if (gameService.stack.length > 0) {
+        <mat-card-content>Click on the card stack to start a new game.</mat-card-content>
+    }
+    @else {
+        <mat-card-content>Play again by clicking on the button in the middle of the screen.</mat-card-content>
+    }
 </mat-card>
