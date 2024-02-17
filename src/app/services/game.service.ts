@@ -17,13 +17,13 @@ export class GameService {
   unsub;
 
   constructor() {
-    this.unsub = onSnapshot(this.getDocRef('Ch00nlubg7CGokZa7QuM'), (game) => {console.log(game);
+    this.unsub = onSnapshot(this.getDocRef('Ch00nlubg7CGokZa7QuM'), (game) => {console.log(game.data());
     });
   }
 
 
   getGamesRef() {
-    return collection(this.firestore, 'game-instances');
+    return collection(this.firestore, 'games');
   }
 
 
