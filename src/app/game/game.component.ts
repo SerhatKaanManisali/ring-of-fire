@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddPlayerDialogComponent } from './add-player-dialog/add-player-dialog.component';
 import { CardInfoComponent } from './card-info/card-info.component';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -19,15 +20,21 @@ import { CardInfoComponent } from './card-info/card-info.component';
 export class GameComponent implements OnInit {
 
   gameService = inject(GameService);
+  dialog: MatDialog = inject(MatDialog);
+  route: ActivatedRoute  = inject(ActivatedRoute);
+
+  gameId: string = this.route.snapshot.params['id'];
   currentCard: string = '';
   cardTaken: boolean = false;
 
 
-  constructor(private dialog: MatDialog) { }
+  constructor() { }
 
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.newGame();
+    console.log(this.getGameId());
+    // await this.gameService.addGame();
   }
 
 
@@ -82,6 +89,11 @@ export class GameComponent implements OnInit {
       if (name && name.length > 0)
         this.gameService.players.push(name);
     });
+  }
+
+
+  getGameId() {
+    return this.route.snapshot.params['id']
   }
 }
 

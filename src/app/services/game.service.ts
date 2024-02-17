@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, doc, onSnapshot} from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, doc, onSnapshot } from '@angular/fire/firestore';
 
 
 @Injectable({
@@ -9,16 +9,33 @@ export class GameService {
 
   firestore: Firestore = inject(Firestore);
 
+  unsub;
+
   players: string[] = [];
   stack: string[] = [];
   playedCards: string[] = [];
   currentPlayer: number = 0;
 
-  unsub;
-
   constructor() {
-    this.unsub = onSnapshot(this.getDocRef('Ch00nlubg7CGokZa7QuM'), (game) => {console.log(game.data());
+    this.unsub = onSnapshot(this.getDocRef('hDRcqiWYTMQfTy05RAlP'), (game) => {
+      console.log(game.data());
     });
+  }
+
+
+  async addGame() {
+    await addDoc(this.getGamesRef(), this.gameAsJson());
+  }
+
+
+
+  gameAsJson() {
+    return {
+      players: this.players,
+      stack: this.stack,
+      playedCards: this.playedCards,
+      currentPlayer: this.currentPlayer
+    };
   }
 
 
