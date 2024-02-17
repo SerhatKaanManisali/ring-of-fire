@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { GameService } from '../services/game.service';
 import { PlayerComponent } from './player/player.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,6 +7,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddPlayerDialogComponent } from './add-player-dialog/add-player-dialog.component';
 import { CardInfoComponent } from './card-info/card-info.component';
 import { ActivatedRoute } from '@angular/router';
+import { Firestore, addDoc, collection, doc, onSnapshot } from '@angular/fire/firestore';
 
 
 @Component({
@@ -19,13 +19,20 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GameComponent implements OnInit {
 
-  gameService = inject(GameService);
+  firestore: Firestore = inject(Firestore);
   dialog: MatDialog = inject(MatDialog);
-  route: ActivatedRoute  = inject(ActivatedRoute);
+  route: ActivatedRoute = inject(ActivatedRoute);
 
-  gameId: string = this.route.snapshot.params['id'];
+
+  unsubGame: Function | undefined;
   currentCard: string = '';
   cardTaken: boolean = false;
+
+
+  players: string[] = [];
+  stack: string[] = [];
+  playedCards: string[] = [];
+  currentPlayer: number = 0;
 
 
   constructor() { }
@@ -33,32 +40,32 @@ export class GameComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.newGame();
-    console.log(this.getGameId());
+    this.getGameState();
     // await this.gameService.addGame();
   }
 
 
   newGame() {
     this.fillStack();
-    shuffle(this.gameService.stack);
-    this.gameService.playedCards = [];
-    this.gameService.currentPlayer = 0;
+    shuffle(this.stack);
+    this.playedCards = [];
+    this.currentPlayer = 0;
   }
 
 
   fillStack() {
     for (let i = 1; i < 14; i++) {
-      this.gameService.stack.push(`ace_${i}`);
-      this.gameService.stack.push(`clubs_${i}`);
-      this.gameService.stack.push(`diamonds_${i}`);
-      this.gameService.stack.push(`hearts_${i}`);
+      this.stack.push(`ace_${i}`);
+      this.stack.push(`clubs_${i}`);
+      this.stack.push(`diamonds_${i}`);
+      this.stack.push(`hearts_${i}`);
     }
   }
 
 
   takeCard() {
-    if (!this.cardTaken && this.gameService.players.length !== 0) {
-      let poppedCard = this.gameService.stack.pop();
+    if (!this.cardTaken && this.players.length !== 0) {
+      let poppedCard = this.stack.pop();
       if (poppedCard !== undefined) {
         this.currentCard = poppedCard;
         this.cardTaken = true;
@@ -70,14 +77,14 @@ export class GameComponent implements OnInit {
 
 
   pickNextPlayer() {
-    this.gameService.currentPlayer++;
-    this.gameService.currentPlayer = this.gameService.currentPlayer % this.gameService.players.length;
+    this.currentPlayer++;
+    this.currentPlayer = this.currentPlayer % this.players.length;
   }
 
 
   addToPlayedStack() {
     setTimeout(() => {
-      this.gameService.playedCards.push(this.currentCard);
+      this.playedCards.push(this.currentCard);
       this.cardTaken = false;
     }, 1500);
   }
@@ -87,13 +94,44 @@ export class GameComponent implements OnInit {
     const dialogRef = this.dialog.open(AddPlayerDialogComponent);
     dialogRef.afterClosed().subscribe(name => {
       if (name && name.length > 0)
-        this.gameService.players.push(name);
+        this.players.push(name);
     });
   }
 
 
   getGameId() {
     return this.route.snapshot.params['id']
+  }
+
+
+  getGameState() {
+    this.unsubGame = onSnapshot(this.getDocRef(this.getGameId()), (game) => {
+      
+    });
+  }
+
+  async addGame() {
+    await addDoc(this.getGamesRef(), this.gameAsJson());
+  }
+
+
+  gameAsJson() {
+    return {
+      players: this.players,
+      stack: this.stack,
+      playedCards: this.playedCards,
+      currentPlayer: this.currentPlayer
+    };
+  }
+
+
+  getGamesRef() {
+    return collection(this.firestore, 'games');
+  }
+
+
+  getDocRef(docId: string) {
+    return doc(this.getGamesRef(), docId);
   }
 }
 

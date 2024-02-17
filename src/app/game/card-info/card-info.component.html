@@ -3,10 +3,10 @@
         @if (card) {
             <mat-card-title>{{title}}</mat-card-title>
         }
-        @else if (gameService.players.length === 0) {
+        @else if (gameComponent.players.length === 0) {
             <mat-card-title>Add a player</mat-card-title>
         }
-        @else if (gameService.stack.length > 0) {
+        @else if (gameComponent.stack.length > 0) {
             <mat-card-title>Pick a card</mat-card-title>
         }
         @else {
@@ -16,10 +16,10 @@
     @if (card) {
         <mat-card-content>{{description }}</mat-card-content>
     }
-    @else if (gameService.players.length === 0) {
+    @else if (gameComponent.players.length === 0) {
         <mat-card-content>Add at least one new player to start play the game.</mat-card-content>
     }
-    @else if (gameService.stack.length > 0) {
+    @else if (gameComponent.stack.length > 0) {
         <mat-card-content>Click on the card stack to start a new game.</mat-card-content>
     }
     @else {
