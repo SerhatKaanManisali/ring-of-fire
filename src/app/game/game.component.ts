@@ -7,7 +7,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddPlayerDialogComponent } from './add-player-dialog/add-player-dialog.component';
 import { CardInfoComponent } from './card-info/card-info.component';
 import { ActivatedRoute } from '@angular/router';
-import { Firestore, collection, doc, onSnapshot, addDoc } from '@angular/fire/firestore';
+import { Firestore, collection, doc, onSnapshot, addDoc, updateDoc } from '@angular/fire/firestore';
 
 
 @Injectable({
@@ -27,12 +27,10 @@ export class GameComponent implements OnInit {
   route: ActivatedRoute = inject(ActivatedRoute);
 
 
-  firstInstance: boolean = true;
   unsubGame: Function | undefined;
+  firstInstance: boolean = true;
   currentCard: string = '';
   cardTaken: boolean = false;
-
-
   players: string[] = [];
   stack: string[] = [];
   playedCards: string[] = [];
@@ -44,6 +42,7 @@ export class GameComponent implements OnInit {
 
   ngOnInit(): void {
     this.newGame();
+    this.saveGameState();
     this.getGameState();
   }
 
@@ -53,7 +52,7 @@ export class GameComponent implements OnInit {
     shuffle(this.stack);
     this.playedCards = [];
     this.currentPlayer = 0;
-    
+    this.firstInstance = false;
   }
 
 
@@ -67,12 +66,13 @@ export class GameComponent implements OnInit {
   }
 
 
-  takeCard() {
+  async takeCard() {
     if (!this.cardTaken && this.players.length !== 0) {
       let poppedCard = this.stack.pop();
       if (poppedCard !== undefined) {
         this.currentCard = poppedCard;
         this.cardTaken = true;
+        await this.saveGameState();
         this.pickNextPlayer();
         this.addToPlayedStack();
       }
@@ -90,6 +90,7 @@ export class GameComponent implements OnInit {
     setTimeout(() => {
       this.playedCards.push(this.currentCard);
       this.cardTaken = false;
+      this.saveGameState();
     }, 1500);
   }
 
@@ -99,20 +100,26 @@ export class GameComponent implements OnInit {
     dialogRef.afterClosed().subscribe(name => {
       if (name && name.length > 0)
         this.players.push(name);
+      this.saveGameState();
     });
   }
 
 
-  
-
-
   getGameState() {
-    this.unsubGame = onSnapshot(this.getDocRef(this.getGameId()), (gameState: any) => {
+    this.unsubGame = onSnapshot(this.getDocRef(), (gameState: any) => {
       this.players = gameState.data().players;
       this.stack = gameState.data().stack;
       this.playedCards = gameState.data().playedCards;
       this.currentPlayer = gameState.data().currentPlayer;
+      this.currentCard = gameState.data().currentCard;
+      this.cardTaken = gameState.data().cardTaken;      
+      this.firstInstance = gameState.data().firstInstance;
     });
+  }
+
+
+  async saveGameState() {
+    await updateDoc(this.getDocRef(), this.gameAsJson());
   }
 
 
@@ -121,7 +128,10 @@ export class GameComponent implements OnInit {
       players: this.players,
       stack: this.stack,
       playedCards: this.playedCards,
-      currentPlayer: this.currentPlayer
+      currentPlayer: this.currentPlayer,
+      currentCard: this.currentCard,
+      cardTaken: this.cardTaken,
+      firstInstance: this.firstInstance
     };
   }
 
@@ -136,8 +146,8 @@ export class GameComponent implements OnInit {
   }
 
 
-  getDocRef(docId: string) {
-    return doc(this.getGamesRef(), docId);
+  getDocRef() {
+    return doc(this.getGamesRef(), this.getGameId());
   }
 }
 

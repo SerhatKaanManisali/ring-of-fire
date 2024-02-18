@@ -8,9 +8,7 @@
         }
     </div>
 
-    @if (!firstInstance && stack.length === 0) {
-        <img (click)="newGame()" class="replay-button" src="assets/img/replay.png">
-    } @else {
+    @if (stack.length > 0) {
         <div class="card-stack">
             @for (count of [0, 1, 2, 3]; track $index;) {
             <img [ngStyle]="{'left.px': count * 3}" src="assets/img/cards/card_cover.png">
@@ -22,6 +20,8 @@
             }
             <img *ngIf="cardTaken" class="take-card" style="left: 12px;" src="assets/img/cards/{{currentCard}}.png">
         </div>
+    } @else {
+        <img (click)="newGame()" class="replay-button" src="assets/img/replay.png">
     }
 
     <app-card-info [card]="currentCard"></app-card-info>
