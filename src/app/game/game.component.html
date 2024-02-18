@@ -20,6 +20,8 @@
             }
             <img *ngIf="cardTaken" class="take-card" style="left: 12px;" src="assets/img/cards/{{currentCard}}.png">
         </div>
+
+        <span class="card-amount">{{stack.length}}</span>
     } @else {
         <img (click)="newGame()" class="replay-button" src="assets/img/replay.png">
     }

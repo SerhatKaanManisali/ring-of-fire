@@ -34,6 +34,16 @@ section {
     }
 }
 
+.card-amount {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-left: 95px;
+    font-size: 24px;
+    color: white;
+}
+
 .top-card {
     cursor: pointer;
     transition: all 100ms ease-in-out;
