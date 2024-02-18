@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Injectable, OnInit, inject } from '@angular/core';
 import { PlayerComponent } from './player/player.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,9 +7,12 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddPlayerDialogComponent } from './add-player-dialog/add-player-dialog.component';
 import { CardInfoComponent } from './card-info/card-info.component';
 import { ActivatedRoute } from '@angular/router';
-import { Firestore, addDoc, collection, doc, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, collection, doc, onSnapshot, addDoc } from '@angular/fire/firestore';
 
 
+@Injectable({
+  providedIn: 'root'
+})
 @Component({
   selector: 'app-game',
   standalone: true,
@@ -24,6 +27,7 @@ export class GameComponent implements OnInit {
   route: ActivatedRoute = inject(ActivatedRoute);
 
 
+  firstInstance: boolean = true;
   unsubGame: Function | undefined;
   currentCard: string = '';
   cardTaken: boolean = false;
@@ -38,10 +42,9 @@ export class GameComponent implements OnInit {
   constructor() { }
 
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.newGame();
     this.getGameState();
-    // await this.gameService.addGame();
   }
 
 
@@ -50,6 +53,7 @@ export class GameComponent implements OnInit {
     shuffle(this.stack);
     this.playedCards = [];
     this.currentPlayer = 0;
+    
   }
 
 
@@ -99,19 +103,16 @@ export class GameComponent implements OnInit {
   }
 
 
-  getGameId() {
-    return this.route.snapshot.params['id']
-  }
+  
 
 
   getGameState() {
-    this.unsubGame = onSnapshot(this.getDocRef(this.getGameId()), (game) => {
-      
+    this.unsubGame = onSnapshot(this.getDocRef(this.getGameId()), (gameState: any) => {
+      this.players = gameState.data().players;
+      this.stack = gameState.data().stack;
+      this.playedCards = gameState.data().playedCards;
+      this.currentPlayer = gameState.data().currentPlayer;
     });
-  }
-
-  async addGame() {
-    await addDoc(this.getGamesRef(), this.gameAsJson());
   }
 
 
@@ -122,6 +123,11 @@ export class GameComponent implements OnInit {
       playedCards: this.playedCards,
       currentPlayer: this.currentPlayer
     };
+  }
+
+
+  getGameId() {
+    return this.route.snapshot.params['id']
   }
 
 

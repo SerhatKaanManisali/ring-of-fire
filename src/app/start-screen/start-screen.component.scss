@@ -44,8 +44,11 @@ section {
             width: fit-content;
             text-wrap: nowrap;
 
+
+
             >h2 {
                 @include headline();
+                cursor: pointer;
             }
     
             >h3 {
