@@ -23,4 +23,10 @@ export class AddPlayerDialogComponent {
   closeDialog(): void {
     this.dialogRef.close();
   }
+
+  onEnter() {
+    if (this.name.length > 0) {
+        this.dialogRef.close(this.name);
+    }
+}
 }

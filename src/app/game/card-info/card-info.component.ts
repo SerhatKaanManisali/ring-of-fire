@@ -16,7 +16,7 @@ export class CardInfoComponent implements OnChanges {
   gameComponent: GameComponent = inject(GameComponent);
 
   cardAction = [
-    { title: 'Waterfall', description: 'Everyone has to start drinking at the same time. As soon as player 1 stops drinking, player 2 may stop drinking. Player 3 may stop as soon as player 2 stops drinking, and so on.' },
+    { title: 'Waterfall', description: 'Everyone start drinking at the same time. As soon as player 1 stops drinking, player 2 may stop. After player 2 stopped, player 3 stops, and so on.' },
     { title: 'You', description: 'You decide who drinks' },
     { title: 'Me', description: 'Congrats! Drink a shot!' },
     { title: 'Category', description: 'Come up with a category (e.g. Colors). Each player must enumerate one item from the category.' },

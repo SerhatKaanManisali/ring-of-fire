@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Injectable, OnInit, inject } from '@angular/core';
+import { Component, Injectable, OnInit, inject, HostListener } from '@angular/core';
 import { PlayerComponent } from './player/player.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,7 +7,8 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddPlayerDialogComponent } from './add-player-dialog/add-player-dialog.component';
 import { CardInfoComponent } from './card-info/card-info.component';
 import { ActivatedRoute } from '@angular/router';
-import { Firestore, collection, doc, onSnapshot, addDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, collection, doc, onSnapshot, updateDoc } from '@angular/fire/firestore';
+import { MatSidenavModule } from "@angular/material/sidenav";
 
 
 @Injectable({
@@ -16,7 +17,7 @@ import { Firestore, collection, doc, onSnapshot, addDoc, updateDoc } from '@angu
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [CommonModule, PlayerComponent, MatButtonModule, MatIconModule, MatDialogModule, CardInfoComponent],
+  imports: [CommonModule, PlayerComponent, MatButtonModule, MatIconModule, MatDialogModule, CardInfoComponent, MatSidenavModule],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
 })
@@ -25,7 +26,7 @@ export class GameComponent implements OnInit {
   firestore: Firestore = inject(Firestore);
   dialog: MatDialog = inject(MatDialog);
   route: ActivatedRoute = inject(ActivatedRoute);
-
+  windowWidth: number = window.innerWidth;
 
   unsubGame: Function | undefined;
   firstInstance: boolean = true;
@@ -38,6 +39,12 @@ export class GameComponent implements OnInit {
 
 
   constructor() { }
+
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.windowWidth = event.target.innerWidth;
+  }
 
 
   ngOnInit(): void {

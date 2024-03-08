@@ -1,13 +1,15 @@
-@mixin headline($fs: 56px, $tf: 1.1, $fb: 1.5) {
+@mixin headline($fs: 56px, $tf: 1.1, $ft: 1.5) {
     font-size: $fs;
+    font-weight: 700;
     max-width: fit-content;
     transition: all 100ms ease-in-out;
     font-family: 'Comfortaa', 'Josefin Sans';
-    color: white;
+    color: #e25822;
+    text-wrap: nowrap;
 
     &:hover {
         transform: scale($tf);
-        filter: brightness($fb);
+        filter: brightness($ft);
     }
 }
 
@@ -17,43 +19,29 @@ section {
     background-image: url('./../../assets/img/start.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: (25%, 50%);
+    background-position: (calc(58% - 200px), 50%);
     display: flex;
     flex-direction: column;
-    gap: 8%;
+    gap: 12vh;
     padding-left: 2%;
 
     >header {
-        padding-top: 10%;
-
-        >h1 {
-            @include headline($fs: 80px, $tf: 1, $fb: 1);
-            cursor: default;
-        }
+        @include headline($fs: 80px, $tf: 1, $ft: 1);
+        padding-top: 12vh;
+        cursor: default;
     }
 
     >nav {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 6vh;
         width: fit-content;
 
         >a {
+            @include headline();
             display: flex;
             text-decoration: none;
-            width: fit-content;
-            text-wrap: nowrap;
-
-
-
-            >h2 {
-                @include headline();
-                cursor: pointer;
-            }
-    
-            >h3 {
-                @include headline()
-            }
+            cursor: pointer;
         }
     }
 }

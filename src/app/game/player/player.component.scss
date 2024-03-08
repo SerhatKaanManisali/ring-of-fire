@@ -3,7 +3,8 @@
 div {
     @include flex-center();
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
+    margin: 8px 0;
     >img {
         border: 5px solid;
         border-radius: 100%;
@@ -12,6 +13,5 @@ div {
 
     >span {
         font-size: 18px;
-        color: white;
     }
 }

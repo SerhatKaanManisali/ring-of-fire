@@ -6,18 +6,65 @@ section {
     width: 100%;
     background-image: url('../../assets/img/board.jpg');
 
+    >app-player {
+        position: absolute;
+        top: 60px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
     button {
         position: absolute;
         bottom: 25px;
         right: 25px;
+        background: linear-gradient(90deg, rgba(235, 52, 96, 1) 0%, rgb(255, 101, 137) 50%, rgba(235, 52, 96, 1) 100%);
+        box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    >img {
+        height: 30px;
+        position: absolute;
+        right: 5px;
+        transition: all 100ms ease-in-out;
+
+        &:hover {
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+    }
+}
+
+.sidenav-ui {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    height: fit-content;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(90deg, rgba(235, 52, 96, 1) 0%, rgb(255, 101, 137) 50%, rgba(235, 52, 96, 1) 100%);
+
+    >button {
+        width: 50%;
+        border-radius: 0;
+        width: 100%;
+        background: linear-gradient(90deg, rgba(235, 52, 96, 1) 0%, rgb(255, 101, 137) 50%, rgba(235, 52, 96, 1) 100%);
     }
 }
 
 .player-container {
     @include flex-center();
-    position: absolute;
-    top: 25px;
+    flex-direction: column;
+    min-width: 150px;
     gap: 25px;
+    background: linear-gradient(90deg, rgba(235, 52, 96, 1) 0%, rgb(255, 101, 137) 50%, rgba(235, 52, 96, 1) 100%);
+    box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.25);
+    
+    @media screen and (max-width: 568px){
+        margin-bottom: 111px;
+    }
 }
 
 .card-stack {
@@ -41,7 +88,13 @@ section {
     transform: translate(-50%, -50%);
     margin-left: 95px;
     font-size: 24px;
-    color: white;
+
+    @media screen and (max-width: 568px) {
+        margin-left: 0;
+        position: static;
+        transform: none;
+        padding: 17.5px 0;
+    }
 }
 
 .top-card {
@@ -60,7 +113,7 @@ section {
 
 .played-card {
     left: 12px;
-    transform: translate(-150px, -150px) rotate(-10deg);
+    transform: translate(-9px, -150px) rotate(-0.5deg);
 }
 
 .replay-button {
@@ -87,6 +140,6 @@ section {
     }
 
     100% {
-        transform: scale(1) translate(-150px, -150px) rotate(-10deg);
+        transform: scale(1) translate(-9px, -150px) rotate(-0.5deg);
     }
 }

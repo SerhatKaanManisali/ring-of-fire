@@ -1,37 +1,63 @@
-<section>
-
-    <div class="player-container">
+<mat-sidenav-container>
+    <mat-sidenav mode="side" position="end" opened #playerContainer class="player-container">
         @for (player of players; track player; let index = $index) {
-            @if (player) {
-                <app-player [playerName]="player" [playerActive]="index === currentPlayer"></app-player>
-            }
+        @if (player) {
+        <app-player [playerName]="player" [playerActive]="index === currentPlayer"></app-player>
         }
-    </div>
-
-    @if (stack.length > 0) {
-        <div class="card-stack">
-            @for (count of [0, 1, 2, 3]; track $index;) {
-            <img [ngStyle]="{'left.px': count * 3}" src="assets/img/cards/card_cover.png">
+        }
+        @if (windowWidth <= 568) { <div class="sidenav-ui">
+            <span class="card-amount">{{stack.length}}</span>
+            <button mat-fab color="primary" (click)="openDialog()" class="add-player">
+                <mat-icon>
+                    <img src="assets/img/add.png">
+                </mat-icon>
+            </button>
+            </div>
             }
-            <img (click)="takeCard()" [class.top-card]="players.length > 0" [class.take-card]="cardTaken" class="top-card" style="left: 12px;"
-                src="assets/img/cards/card_cover.png">
-            @for (card of playedCards; track $index) {
-            <img class="played-card" src="assets/img/cards/{{card}}.png">
-            }
-            <img *ngIf="cardTaken" class="take-card" style="left: 12px;" src="assets/img/cards/{{currentCard}}.png">
-        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <section>
 
-        <span class="card-amount">{{stack.length}}</span>
-    } @else {
-        <img (click)="newGame()" class="replay-button" src="assets/img/replay.png">
-    }
+            @if (players.length > 0 && !playerContainer.opened) {
+                <app-player [playerName]="players[currentPlayer]" [playerActive]="true"></app-player>
+                }
 
-    <app-card-info [card]="currentCard"></app-card-info>
+                @if (playerContainer.opened) {
+                <img src="assets/img/arrow-right.png" (click)="playerContainer.toggle()">
+                } @else {
+                <img src="assets/img/arrow-left.png" (click)="playerContainer.toggle()">}
 
-    <button mat-fab color="primary" (click)="openDialog()">
-        <mat-icon>
-            <img src="assets/img/add.png">
-        </mat-icon>
-    </button>
+                @if (stack.length > 0) {
+                <div class="card-stack">
+                    @for (count of [0, 1, 2, 3]; track $index;) {
+                    <img [ngStyle]="{'left.px': count * 3}" src="assets/img/cards/card_cover.png">
+                    }
+                    <img (click)="takeCard()" [class.top-card]="players.length > 0" [class.take-card]="cardTaken"
+                        class="top-card" style="left: 12px;" src="assets/img/cards/card_cover.png">
+                    @for (card of playedCards; track $index) {
+                    <img class="played-card" src="assets/img/cards/{{card}}.png">
+                    }
+                    <img *ngIf="cardTaken" class="take-card" style="left: 12px;"
+                        src="assets/img/cards/{{currentCard}}.png">
+                </div>
 
-</section>
+                @if (windowWidth > 568) {
+                <span class="card-amount">{{stack.length}}</span>
+                }
+                } @else {
+                <img (click)="newGame()" class="replay-button" src="assets/img/replay.png">
+                }
+
+                <app-card-info [card]="currentCard"></app-card-info>
+
+                @if (windowWidth > 568) {
+                <button mat-fab color="primary" (click)="openDialog()">
+                    <mat-icon>
+                        <img src="assets/img/add.png">
+                    </mat-icon>
+                </button>
+                }
+
+        </section>
+    </mat-sidenav-content>
+</mat-sidenav-container>
