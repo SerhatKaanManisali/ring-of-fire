@@ -28,6 +28,7 @@ export class GameComponent implements OnInit {
   route: ActivatedRoute = inject(ActivatedRoute);
   windowWidth: number = window.innerWidth;
 
+
   unsubGame: Function | undefined;
   firstInstance: boolean = true;
   currentCard: string = '';
@@ -93,6 +94,14 @@ export class GameComponent implements OnInit {
   }
 
 
+  deletePlayer(playerId: number) {
+    if (playerId !== -1) {
+      this.players.splice(playerId, 1);
+      console.log(this.players);
+    }
+  }
+
+
   addToPlayedStack() {
     setTimeout(() => {
       this.playedCards.push(this.currentCard);
@@ -119,7 +128,7 @@ export class GameComponent implements OnInit {
       this.playedCards = gameState.data().playedCards;
       this.currentPlayer = gameState.data().currentPlayer;
       this.currentCard = gameState.data().currentCard;
-      this.cardTaken = gameState.data().cardTaken;      
+      this.cardTaken = gameState.data().cardTaken;
       this.firstInstance = gameState.data().firstInstance;
     });
   }

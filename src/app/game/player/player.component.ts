@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-player',
@@ -9,9 +9,14 @@ import { Component, Input } from '@angular/core';
   styleUrl: './player.component.scss'
 })
 export class PlayerComponent {
-  @Input()playerName = '';
-  @Input()playerActive = false;
+  @Input()playerName: string = '';
+  @Input()playerActive: boolean = false;
+  @Input()playerId: number = 0;
 
   borderColorActive:string = 'rgb(22, 187, 22)';
   borderColorInactive:string = 'gray';
+
+  deletePlayer(playerId: number) {
+    
+  }
 }

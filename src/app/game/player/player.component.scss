@@ -2,16 +2,44 @@
 
 div {
     @include flex-center();
+    position: relative;
     flex-direction: column;
     gap: 8px;
     margin: 8px 0;
+
     >img {
-        border: 5px solid;
-        border-radius: 100%;
-        height: 75px;
+        &:first-of-type {
+            border: 5px solid;
+            border-radius: 100%;
+            height: 75px;
+        }
+
+        &:last-of-type {
+            object-fit: contain;
+            height: 65px;
+            width: 65px;
+            position: absolute;
+            top: 5px;
+            left: 28%;
+            opacity: 0;
+            transition: all 125ms ease-in-out;
+            border-radius: 100%;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.75;
+            
+            }
+        }
     }
 
     >span {
         font-size: 18px;
     }
+
+    
+}
+
+.no-border {
+    border: none !important;
 }

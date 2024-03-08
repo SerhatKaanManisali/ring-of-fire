@@ -2,7 +2,7 @@
     <mat-sidenav mode="side" position="end" opened #playerContainer class="player-container">
         @for (player of players; track player; let index = $index) {
         @if (player) {
-        <app-player [playerName]="player" [playerActive]="index === currentPlayer"></app-player>
+        <app-player [playerName]="player" [playerActive]="index === currentPlayer" [playerId]="index"></app-player>
         }
         }
         @if (windowWidth <= 568) { <div class="sidenav-ui">

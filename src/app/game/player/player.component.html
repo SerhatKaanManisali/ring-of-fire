@@ -1,4 +1,5 @@
 <div>
     <img [ngStyle]="playerActive ? {'border-color': borderColorActive} : {'border-color': borderColorInactive}" src="assets/img/profile.png">
+    <img class="no-border" src="assets/img/delete.png" (click)="deletePlayer(playerId)">
     <span>{{playerName}}</span>
 </div>
