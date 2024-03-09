@@ -33,8 +33,17 @@ div {
         }
     }
 
-    >span {
+    >input {
         font-size: 18px;
+        text-align: center;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        max-width: 149px;
+
+        &:disabled {
+            color: black;
+        }
     }
 
     

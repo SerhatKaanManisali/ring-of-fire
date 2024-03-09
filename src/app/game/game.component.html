@@ -2,7 +2,7 @@
     <mat-sidenav mode="side" position="end" opened #playerContainer class="player-container">
         @for (player of players; track player; let index = $index) {
         @if (player) {
-        <app-player [playerName]="player" [playerActive]="index === currentPlayer" (deletePlayerEvent)="deletePlayer(index)"></app-player>
+        <app-player [playerName]="player" [playerActive]="index === currentPlayer" [playerId]="index" (deletePlayerEvent)="deletePlayer($event)" (editPlayerEvent)="editPlayer($event)"></app-player>
         }
         }
         @if (windowWidth <= 568) { <div class="sidenav-ui">
@@ -19,7 +19,7 @@
         <section>
 
             @if (players.length > 0 && !playerContainer.opened) {
-                <app-player [playerName]="players[currentPlayer]" [playerActive]="true"></app-player>
+                <app-player [playerName]="players[currentPlayer]" [playerActive]="true" [editable]="false"></app-player>
                 }
 
                 @if (playerContainer.opened) {
