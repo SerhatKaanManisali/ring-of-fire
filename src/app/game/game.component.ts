@@ -95,11 +95,21 @@ export class GameComponent implements OnInit {
 
 
   deletePlayer(playerId: number) {
-    if (playerId !== -1) {
-      this.players.splice(playerId, 1);
-      console.log(this.players);
+    if (playerId > -1 && playerId < this.players.length) {
+        this.players.splice(playerId, 1);
     }
-  }
+    // If the deleted player was the current player or a player before, adjust the current player index
+    if (playerId <= this.currentPlayer) {
+        this.currentPlayer--;
+    }
+    // If there are still players left, pick the next player
+    if (this.players.length > 0) {
+        this.pickNextPlayer();
+    }
+    console.log(playerId);
+    
+    this.saveGameState();
+}
 
 
   addToPlayedStack() {
