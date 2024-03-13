@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, Injectable, OnInit, inject, HostListener } from '@angular/core';
 import { PlayerComponent } from './player/player.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +9,7 @@ import { CardInfoComponent } from './card-info/card-info.component';
 import { ActivatedRoute } from '@angular/router';
 import { Firestore, collection, doc, onSnapshot, updateDoc } from '@angular/fire/firestore';
 import { MatSidenavModule } from "@angular/material/sidenav";
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 
 @Injectable({
@@ -19,16 +20,32 @@ import { MatSidenavModule } from "@angular/material/sidenav";
   standalone: true,
   imports: [CommonModule, PlayerComponent, MatButtonModule, MatIconModule, MatDialogModule, CardInfoComponent, MatSidenavModule],
   templateUrl: './game.component.html',
-  styleUrl: './game.component.scss'
+  styleUrl: './game.component.scss',
+  animations: [trigger('fadeInOut', [
+    state('closed',
+      style({
+        opacity: 0
+      })
+    ),
+    state('in',
+      style({
+        opacity: 1
+      })
+    ),
+    transition('void => *', [style({ opacity: 0 }), animate('0.5s ease-in-out')]),
+    transition('* => void', [animate('0.5s ease-in-out'), style({ opacity: 0 }),]),
+  ])]
 })
 export class GameComponent implements OnInit {
 
   firestore: Firestore = inject(Firestore);
   dialog: MatDialog = inject(MatDialog);
   route: ActivatedRoute = inject(ActivatedRoute);
+  location: Location = inject(Location);
   windowWidth: number = window.innerWidth;
 
 
+  messageSent: boolean = false;
   unsubGame: Function | undefined;
   firstInstance: boolean = true;
   currentCard: string = '';
@@ -37,9 +54,6 @@ export class GameComponent implements OnInit {
   stack: string[] = [];
   playedCards: string[] = [];
   currentPlayer: number = 0;
-
-
-  constructor() { }
 
 
   @HostListener('window:resize', ['$event'])
@@ -110,10 +124,10 @@ export class GameComponent implements OnInit {
 
   editPlayer({ index, newName }: { index: number, newName: string }) {
     if (index > -1 && index < this.players.length && newName.trim() !== '') {
-        this.players[index] = newName;
+      this.players[index] = newName;
     }
     this.saveGameState();
-}
+  }
 
 
   addToPlayedStack() {
@@ -179,20 +193,28 @@ export class GameComponent implements OnInit {
   getDocRef() {
     return doc(this.getGamesRef(), this.getGameId());
   }
+
+  copyUrl() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url);
+    this.messageConfirmation();
+  }
+
+  messageConfirmation() {
+    this.messageSent = true;
+    setTimeout(() => this.messageSent = false, 3000);
+  }
 }
 
 
 function shuffle(array: string[]) {
   let currentIndex = array.length, randomIndex;
 
-  // While there remain elements to shuffle.
   while (currentIndex > 0) {
 
-    // Pick a remaining element.
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
 
-    // And swap it with the current element.
     [array[currentIndex], array[randomIndex]] = [
       array[randomIndex], array[currentIndex]];
   }

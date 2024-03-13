@@ -14,11 +14,20 @@ section {
     }
 
     button {
-        position: absolute;
-        bottom: 25px;
-        right: 25px;
         background: linear-gradient(90deg, rgba(235, 52, 96, 1) 0%, rgb(255, 101, 137) 50%, rgba(235, 52, 96, 1) 100%);
         box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.25);
+
+        &:first-of-type {
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+        }
+
+        &:last-of-type {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+        }
     }
 
     >img {
@@ -61,8 +70,8 @@ section {
     gap: 25px;
     background: linear-gradient(90deg, rgba(235, 52, 96, 1) 0%, rgb(255, 101, 137) 50%, rgba(235, 52, 96, 1) 100%);
     box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.25);
-    
-    @media screen and (max-width: 568px){
+
+    @media screen and (max-width: 568px) {
         margin-bottom: 111px;
     }
 }
@@ -118,12 +127,22 @@ section {
 
 .replay-button {
     cursor: pointer;
-    height: 40px;
     transition: all 100ms ease-in-out;
 
     &:hover {
         transform: scale(1.1) rotate(-270deg);
     }
+}
+
+.confirmation {
+    position: absolute;
+    bottom: 150px;
+    left: 50%;
+    margin-left: -70.5px;
+    z-index: 1;
+    background-color: lightgray;
+    padding: 10px 25px;
+    border-radius: 10px;
 }
 
 @keyframes take-card-animation {

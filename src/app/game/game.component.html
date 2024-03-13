@@ -2,7 +2,8 @@
     <mat-sidenav mode="side" position="end" opened #playerContainer class="player-container">
         @for (player of players; track player; let index = $index) {
         @if (player) {
-        <app-player [playerName]="player" [playerActive]="index === currentPlayer" [playerId]="index" (deletePlayerEvent)="deletePlayer($event)" (editPlayerEvent)="editPlayer($event)"></app-player>
+        <app-player [playerName]="player" [playerActive]="index === currentPlayer" [playerId]="index"
+            (deletePlayerEvent)="deletePlayer($event)" (editPlayerEvent)="editPlayer($event)"></app-player>
         }
         }
         @if (windowWidth <= 568) { <div class="sidenav-ui">
@@ -19,44 +20,55 @@
         <section>
 
             @if (players.length > 0 && !playerContainer.opened) {
-                <app-player [playerName]="players[currentPlayer]" [playerActive]="true" [editable]="false"></app-player>
+            <app-player [playerName]="players[currentPlayer]" [playerActive]="true" [editable]="false"></app-player>
+            }
+
+            @if (playerContainer.opened) {
+            <img src="assets/img/arrow-right.png" (click)="playerContainer.toggle()">
+            } @else {
+            <img src="assets/img/arrow-left.png" (click)="playerContainer.toggle()">}
+
+            @if (stack.length > 0) {
+            <div class="card-stack">
+                @for (count of [0, 1, 2, 3]; track $index;) {
+                <img [ngStyle]="{'left.px': count * 3}" src="assets/img/cards/card_cover.png">
                 }
-
-                @if (playerContainer.opened) {
-                <img src="assets/img/arrow-right.png" (click)="playerContainer.toggle()">
-                } @else {
-                <img src="assets/img/arrow-left.png" (click)="playerContainer.toggle()">}
-
-                @if (stack.length > 0) {
-                <div class="card-stack">
-                    @for (count of [0, 1, 2, 3]; track $index;) {
-                    <img [ngStyle]="{'left.px': count * 3}" src="assets/img/cards/card_cover.png">
-                    }
-                    <img (click)="takeCard()" [class.top-card]="players.length > 0" [class.take-card]="cardTaken"
-                        class="top-card" style="left: 12px;" src="assets/img/cards/card_cover.png">
-                    @for (card of playedCards; track $index) {
-                    <img class="played-card" src="assets/img/cards/{{card}}.png">
-                    }
-                    <img *ngIf="cardTaken" class="take-card" style="left: 12px;"
-                        src="assets/img/cards/{{currentCard}}.png">
-                </div>
-
-                @if (windowWidth > 568) {
-                <span class="card-amount">{{stack.length}}</span>
+                <img (click)="takeCard()" [class.top-card]="players.length > 0" [class.take-card]="cardTaken"
+                    class="top-card" style="left: 12px;" src="assets/img/cards/card_cover.png">
+                @for (card of playedCards; track $index) {
+                <img class="played-card" src="assets/img/cards/{{card}}.png">
                 }
-                } @else {
-                <img (click)="newGame()" class="replay-button" src="assets/img/replay.png">
-                }
+                <img *ngIf="cardTaken" class="take-card" style="left: 12px;" src="assets/img/cards/{{currentCard}}.png">
+            </div>
 
-                <app-card-info [card]="currentCard"></app-card-info>
+            @if (windowWidth > 568) {
+            <span class="card-amount">{{stack.length}}</span>
+            }
+            } @else {
+            <button mat-fab class="replay-button">
+                <img (click)="newGame()" src="assets/img/replay.png">
+            </button>
+            }
 
-                @if (windowWidth > 568) {
-                <button mat-fab color="primary" (click)="openDialog()">
-                    <mat-icon>
-                        <img src="assets/img/add.png">
-                    </mat-icon>
-                </button>
-                }
+            <app-card-info [card]="currentCard"></app-card-info>
+
+            @if (windowWidth > 568) {
+            <button mat-fab (click)="openDialog()">
+                <mat-icon>
+                    <img src="assets/img/add.png">
+                </mat-icon>
+            </button>
+            }
+
+            <button mat-fab matTooltip="Link copied" (click)="copyUrl()">
+                <mat-icon>
+                    <img src="assets/img/link.png">
+                </mat-icon>
+            </button>
+
+            @if (messageSent) {
+                <span @fadeInOut class="confirmation">Link copied!</span>
+            }
 
         </section>
     </mat-sidenav-content>
