@@ -69,7 +69,6 @@ export class GameComponent implements OnInit {
     this.newGame();
     this.saveGameState();
     this.getGameState();
-    this.checkForScrollbar();
   }
 
 
@@ -123,7 +122,6 @@ export class GameComponent implements OnInit {
       this.pickNextPlayer();
     }
     this.saveGameState();
-    this.checkForScrollbar();
   }
 
 
@@ -164,7 +162,6 @@ export class GameComponent implements OnInit {
       this.cardTaken = gameState.data().cardTaken;
       this.firstInstance = gameState.data().firstInstance;
     });
-    this.checkForScrollbar();
   }
 
 
@@ -209,20 +206,6 @@ export class GameComponent implements OnInit {
   messageConfirmation() {
     this.messageSent = true;
     setTimeout(() => this.messageSent = false, 3000);
-  }
-
-  checkForScrollbar() {
-    const playerContainerEl = this.playerContainer.nativeElement;
-    const sidenavUiEl = this.sidenavUi.nativeElement;
-
-    if (playerContainerEl.scrollHeight > playerContainerEl.clientHeight) {
-      sidenavUiEl.style.width = '160px';
-    } else {
-      sidenavUiEl.style.width = '150px';
-    }
-
-    console.log('Scrollbar check');
-    
   }
 }
 

@@ -33,7 +33,7 @@ section {
     >img {
         height: 30px;
         position: absolute;
-        right: 5px;
+        right: 13px;
         transition: all 100ms ease-in-out;
 
         &:hover {
@@ -47,7 +47,7 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 150px;
+    width: 160px;
     height: fit-content;
     position: fixed;
     bottom: 0;
@@ -66,7 +66,7 @@ section {
 .player-container {
     @include flex-center();
     flex-direction: column;
-    min-width: 150px;
+    min-width: 160px;
     gap: 25px;
     background: linear-gradient(90deg, rgba(235, 52, 96, 1) 0%, rgb(255, 101, 137) 50%, rgba(235, 52, 96, 1) 100%);
     box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.25);
