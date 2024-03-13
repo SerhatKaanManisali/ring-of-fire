@@ -25,8 +25,8 @@ section {
 
         &:last-of-type {
             position: absolute;
-            top: 25px;
-            right: 25px;
+            bottom: 25px;
+            right: 100px;
         }
     }
 
@@ -98,7 +98,7 @@ section {
     margin-left: 95px;
     font-size: 24px;
 
-    @media screen and (max-width: 568px) {
+    @media screen and (max-width: 768px) {
         margin-left: 0;
         position: static;
         transform: none;

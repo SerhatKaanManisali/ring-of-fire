@@ -6,11 +6,16 @@
             (deletePlayerEvent)="deletePlayer($event)" (editPlayerEvent)="editPlayer($event)"></app-player>
         }
         }
-        @if (windowWidth <= 568) { <div class="sidenav-ui">
+        @if (windowWidth <= 768) { <div class="sidenav-ui" #sidenavUi>
             <span class="card-amount">{{stack.length}}</span>
             <button mat-fab color="primary" (click)="openDialog()" class="add-player">
                 <mat-icon>
                     <img src="assets/img/add.png">
+                </mat-icon>
+            </button>
+            <button mat-fab (click)="copyUrl()">
+                <mat-icon>
+                    <img src="assets/img/link.png">
                 </mat-icon>
             </button>
             </div>
@@ -41,7 +46,7 @@
                 <img *ngIf="cardTaken" class="take-card" style="left: 12px;" src="assets/img/cards/{{currentCard}}.png">
             </div>
 
-            @if (windowWidth > 568) {
+            @if (windowWidth > 768) {
             <span class="card-amount">{{stack.length}}</span>
             }
             } @else {
@@ -52,19 +57,18 @@
 
             <app-card-info [card]="currentCard"></app-card-info>
 
-            @if (windowWidth > 568) {
+            @if (windowWidth > 768) {
             <button mat-fab (click)="openDialog()">
                 <mat-icon>
                     <img src="assets/img/add.png">
                 </mat-icon>
             </button>
-            }
-
-            <button mat-fab matTooltip="Link copied" (click)="copyUrl()">
+            <button mat-fab (click)="copyUrl()">
                 <mat-icon>
                     <img src="assets/img/link.png">
                 </mat-icon>
             </button>
+            }
 
             @if (messageSent) {
                 <span @fadeInOut class="confirmation">Link copied!</span>

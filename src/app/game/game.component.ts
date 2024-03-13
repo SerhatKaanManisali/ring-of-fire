@@ -1,5 +1,5 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, Injectable, OnInit, inject, HostListener } from '@angular/core';
+import { Component, Injectable, OnInit, inject, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { PlayerComponent } from './player/player.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -55,6 +55,9 @@ export class GameComponent implements OnInit {
   playedCards: string[] = [];
   currentPlayer: number = 0;
 
+  @ViewChild('playerContainer') playerContainer!: ElementRef;
+  @ViewChild('sidenavUi') sidenavUi!: ElementRef;
+
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -66,6 +69,7 @@ export class GameComponent implements OnInit {
     this.newGame();
     this.saveGameState();
     this.getGameState();
+    this.checkForScrollbar();
   }
 
 
@@ -119,6 +123,7 @@ export class GameComponent implements OnInit {
       this.pickNextPlayer();
     }
     this.saveGameState();
+    this.checkForScrollbar();
   }
 
 
@@ -159,6 +164,7 @@ export class GameComponent implements OnInit {
       this.cardTaken = gameState.data().cardTaken;
       this.firstInstance = gameState.data().firstInstance;
     });
+    this.checkForScrollbar();
   }
 
 
@@ -203,6 +209,20 @@ export class GameComponent implements OnInit {
   messageConfirmation() {
     this.messageSent = true;
     setTimeout(() => this.messageSent = false, 3000);
+  }
+
+  checkForScrollbar() {
+    const playerContainerEl = this.playerContainer.nativeElement;
+    const sidenavUiEl = this.sidenavUi.nativeElement;
+
+    if (playerContainerEl.scrollHeight > playerContainerEl.clientHeight) {
+      sidenavUiEl.style.width = '160px';
+    } else {
+      sidenavUiEl.style.width = '150px';
+    }
+
+    console.log('Scrollbar check');
+    
   }
 }
 
