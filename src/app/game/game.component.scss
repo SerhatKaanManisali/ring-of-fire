@@ -2,6 +2,7 @@
 
 section {
     @include flex-center();
+    overflow: hidden;
     height: 100vh;
     width: 100%;
     background-image: url('../../assets/img/board.jpg');
