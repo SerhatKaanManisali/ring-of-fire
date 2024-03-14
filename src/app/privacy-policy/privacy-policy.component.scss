@@ -1,0 +1,35 @@
+section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    gap: 25px;
+    padding-bottom: 25px;
+    text-align: center;
+    text-wrap: pretty;
+    background: linear-gradient(90deg, rgba(235, 52, 96, 1) 0%, rgb(255, 101, 137) 50%, rgba(235, 52, 96, 1) 100%);
+    background-repeat: repeat-y;
+
+    >h1 {
+        font-size: 44px;
+    }
+    
+    >h2 {
+        font-size: 38px;
+    }
+
+    >h3 {
+        font-size: 32px;
+    }
+
+    >h4 {
+        font-size: 26px;
+    }
+    
+    >p {
+        font-size: 16px;
+    }
+}
