@@ -70,8 +70,8 @@
             </button>
             }
 
-            @if (messageSent) {
-                <span @fadeInOut class="confirmation">Link copied!</span>
+            @if (confirmation) {
+                <span @fadeInOut class="confirmation">{{message}}</span>
             }
 
         </section>

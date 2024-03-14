@@ -5,9 +5,10 @@ section {
     flex-direction: column;
     padding: 25px;
     gap: 25px;
+    background: linear-gradient(90deg, rgba(235, 52, 96, 1) 0%, rgb(255, 101, 137) 50%, rgba(235, 52, 96, 1) 100%);
 
     >h1 {
-        font-family: 'Comfortaa', 'Josefin Sans' !important;
+        font-family: 'Inter' !important;
         font-size: 36px;
         margin: 0;
     }

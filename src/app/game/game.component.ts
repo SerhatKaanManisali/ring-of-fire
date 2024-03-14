@@ -45,7 +45,6 @@ export class GameComponent implements OnInit {
   windowWidth: number = window.innerWidth;
 
 
-  messageSent: boolean = false;
   unsubGame: Function | undefined;
   firstInstance: boolean = true;
   currentCard: string = '';
@@ -54,6 +53,9 @@ export class GameComponent implements OnInit {
   stack: string[] = [];
   playedCards: string[] = [];
   currentPlayer: number = 0;
+
+  confirmation: boolean = false;
+  message: string = '';
 
   @ViewChild('playerContainer') playerContainer!: ElementRef;
   @ViewChild('sidenavUi') sidenavUi!: ElementRef;
@@ -148,6 +150,7 @@ export class GameComponent implements OnInit {
       if (name && name.length > 0)
         this.players.push(name);
       this.saveGameState();
+      this.confirmationMessage('Player added!');
     });
   }
 
@@ -200,12 +203,13 @@ export class GameComponent implements OnInit {
   copyUrl() {
     const url = window.location.href;
     navigator.clipboard.writeText(url);
-    this.messageConfirmation();
+    this.confirmationMessage('Link copied!');
   }
 
-  messageConfirmation() {
-    this.messageSent = true;
-    setTimeout(() => this.messageSent = false, 3000);
+  confirmationMessage(message: string) {
+    this.message = message;
+    this.confirmation = true;
+    setTimeout(() => this.confirmation = false, 3000);
   }
 }
 
